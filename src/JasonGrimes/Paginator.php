@@ -198,6 +198,14 @@ class Paginator
     {
         $pages = array();
 
+        if ($this->currentPage < 1) {
+            $this->currentPage = 1;
+        }
+
+        if ($this->currentPage > $this->numPages) {
+            $this->currentPage = $this->numPages;
+        }
+
         if ($this->numPages <= 1) {
             return array();
         }
