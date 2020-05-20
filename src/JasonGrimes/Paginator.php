@@ -308,9 +308,43 @@ class Paginator
         return $html;
     }
 
+    /*
+    render bootstrap 4.5.0
+    */
+    public function toHtmlBs4()
+    {
+        if ($this->numPages <= 1) {
+            return '';
+        }
+
+        $html = '<ul class="pagination">';
+        if ($this->getPrevUrl()) {
+            $html .= '<li class="page-item"><a class="page-link" href="' . htmlspecialchars($this->getPrevUrl()) . '">&laquo; '. $this->previousText .'</a></li>';
+        }
+
+        foreach ($this->getPages() as $page) {
+            if ($page['url']) {
+                if ($page['isCurrent']) {
+                    $html .= '<li class="page-item active"><span class="page-link">' . htmlspecialchars($page['num']) . '</span></li>';
+                } else {
+                    $html .= '<li class="page-item"><a class="page-link" href="' . htmlspecialchars($page['url']) . '">' . htmlspecialchars($page['num']) . '</a></li>';
+                }
+            } else {
+                $html .= '<li class="page-item disabled"><span class="page-link">' . htmlspecialchars($page['num']) . '</span></li>';
+            }
+        }
+
+        if ($this->getNextUrl()) {
+            $html .= '<li class="page-item"><a class="page-link" href="' . htmlspecialchars($this->getNextUrl()) . '">'. $this->nextText .' &raquo;</a></li>';
+        }
+        $html .= '</ul>';
+
+        return $html;
+    }
+
     public function __toString()
     {
-        return $this->toHtml();
+        return $this->toHtmlBs4();
     }
 
     public function getCurrentPageFirstItem()
