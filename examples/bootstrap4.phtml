@@ -1,0 +1,58 @@
+<?php
+
+require 'Paginator.php';
+
+use JasonGrimes\Paginator;
+
+$totalItems = 1000;
+$itemsPerPage = 50;
+$currentPage = 10;
+$urlPattern = '/foo/page/(:num)';
+
+$paginator = new Paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern);
+$paginator->setMaxPagesToShow(15);
+
+?>
+<html>
+  <head>
+    <!-- The default, built-in template supports the Twitter Bootstrap pagination styles. -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  </head>
+  <body>
+
+<?php if ($paginator->getNumPages() > 1): ?>
+    <ul class="pagination">
+        <?php if ($paginator->getPrevUrl()): ?>
+            <li class="page-item">
+            	<a class="page-link" href="<?php echo $paginator->getPrevUrl(); ?>">&laquo; Previous</a>
+            </li>
+        <?php endif; ?>
+
+        <?php foreach ($paginator->getPages() as $page): ?>
+            <?php if ($page['url']): ?>
+                <?php if ($page['isCurrent']): ?>
+                	<li class="page-item active">
+	                	<span class="page-link"><?php echo $page['num']; ?></span>
+	                </li>
+	            <?php else: ?>
+	            	<li class="page-item">
+	                	<a class="page-link" href="<?php echo $page['url']; ?>"><?php echo $page['num']; ?></a>
+	                </li>
+                <?php endif ?>
+            <?php else: ?>
+                <li class="page-item disabled">
+                	<span class="page-link"><?php echo $page['num']; ?></span>
+                </li>
+            <?php endif; ?>
+        <?php endforeach; ?>
+
+        <?php if ($paginator->getNextUrl()): ?>
+            <li class="page-item">
+            	<a class="page-link" href="<?php echo $paginator->getNextUrl(); ?>">Next &raquo;</a>
+            </li>
+        <?php endif; ?>
+    </ul>
+<?php endif; ?>
+
+  </body>
+</html>
