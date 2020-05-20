@@ -319,7 +319,7 @@ class Paginator
 
         $html = '<ul class="pagination">';
         if ($this->getPrevUrl()) {
-            $html .= '<li class="page-item"><a class="page-link" href="' . htmlspecialchars($this->getPrevUrl()) . '">&laquo; '. $this->previousText .'</a></li>';
+            $html .= '<li class="page-item"><a class="page-link" href="' . htmlspecialchars($this->getPrevUrl()) . '" data-page="' . $this->getPrevPage() . '">&laquo; ' . $this->previousText . '</a></li>';
         }
 
         foreach ($this->getPages() as $page) {
@@ -327,7 +327,7 @@ class Paginator
                 if ($page['isCurrent']) {
                     $html .= '<li class="page-item active"><span class="page-link">' . htmlspecialchars($page['num']) . '</span></li>';
                 } else {
-                    $html .= '<li class="page-item"><a class="page-link" href="' . htmlspecialchars($page['url']) . '">' . htmlspecialchars($page['num']) . '</a></li>';
+                    $html .= '<li class="page-item"><a class="page-link" href="' . htmlspecialchars($page['url']) . '" data-page="' . htmlspecialchars($page['num']) . '">' . htmlspecialchars($page['num']) . '</a></li>';
                 }
             } else {
                 $html .= '<li class="page-item disabled"><span class="page-link">' . htmlspecialchars($page['num']) . '</span></li>';
@@ -335,7 +335,7 @@ class Paginator
         }
 
         if ($this->getNextUrl()) {
-            $html .= '<li class="page-item"><a class="page-link" href="' . htmlspecialchars($this->getNextUrl()) . '">'. $this->nextText .' &raquo;</a></li>';
+            $html .= '<li class="page-item"><a class="page-link" href="' . htmlspecialchars($this->getNextUrl()) . '" data-page="' . $this->getNextPage() . '">'. $this->nextText .' &raquo;</a></li>';
         }
         $html .= '</ul>';
 
